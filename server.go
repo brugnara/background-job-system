@@ -1,26 +1,57 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
-	"log"
 	"net/http"
+	"strings"
+
+	"github.com/satori/go.uuid"
 )
+
+type formInput struct {
+	Type        string
+	Name        string
+	Label       string
+	Placeholder string
+	Value       string
+}
 
 var tpls *template.Template
 
 func init() {
 	// tpls stuff
-	tpls = template.Must(template.ParseGlob("./tpls/*.gohtml"))
+	tpls = template.Must(
+		template.New(
+			"").Funcs(
+			template.FuncMap{
+				"randID":   randID,
+				"toStruct": toStruct,
+			},
+		).ParseGlob("./tpls/*.gohtml"))
 	// handlers
 	http.HandleFunc("/", index)
+	http.HandleFunc("/jobs", jobsIndex)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	err := tpls.ExecuteTemplate(w, "index.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
+// randID generates an unique id for html tags
+func randID() string {
+	return fmt.Sprintf("%s", uuid.NewV4())
+}
+
+// toStruct converts a `..|..|..|..` string, into a formInput{}
+func toStruct(s string) formInput {
+	tmp := strings.Split(s, "|")
+	if len(tmp) != 5 {
+		return formInput{}
+	}
+	return formInput{
+		tmp[0],
+		tmp[1],
+		tmp[2],
+		tmp[3],
+		tmp[4],
 	}
 }
 

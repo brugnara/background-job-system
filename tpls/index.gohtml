@@ -4,23 +4,28 @@
 <body>
   <h1>Queue handler</h1>
   <p>Compile the form below. We will forward your job when the time comes</p>
+
+{{if .Error -}}
+  {{template "error" .Error}}
+{{- end}}
+
+{{if .Done -}}
+  {{template "done" .Done}}
+{{- end}}
+
   <form method="POST">
-    <input
-      type="text"
-      name="endpoint"
-      placeholder="https://your.endpoint.com/some/path?if=needed">
-    <input
-      type="text"
-      placeholder="Job identifier"
-      name="name">
-    <input
-      type="text"
-      placeholder="Payload Content-Type"
-      name="contentType"
-      value="application/json">
-    <textarea
-      name="payload"
-      placeholder='{ "your": "JSON", "here": true }'></textarea>
+    <fieldset>
+      <legend>Job insert</legend>
+
+      {{template "input" "text|name|Friendly name for this job|Name|" | toStruct}}
+      {{template "input" "text|ep|Endpoint to POST this job to|https://your.endpoint.com/some/path?if=needed|http://localhost:8080/" | toStruct}}
+      {{template "input" "text|cd|HTTP code for job OK|200|200" | toStruct}}
+      {{template "input" "text|ct|Payload ContentType|application/json|application/json" | toStruct}}
+      {{template "input" "datetime-local|due|Due date||" | toStruct}}
+      {{template "textarea" `|pl|Payload|{ "your": "JSON", "here": true }|` | toStruct}}
+
+      <button class="primary" type="submit">Submit</button>
+    </fieldset>
   </form>
 </body>
 </html>

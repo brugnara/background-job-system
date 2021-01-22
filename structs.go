@@ -13,6 +13,7 @@ type queueOptions struct {
 
 type job struct {
 	gorm.Model
+	UUID         string
 	Name         string
 	Retries      int
 	Payload      string

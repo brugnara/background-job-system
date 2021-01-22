@@ -1,0 +1,15 @@
+{{define "textarea"}}
+{{$id := randID}}
+<div class="row responsive-label">
+  <div class="col-sm-12 col-md-3">
+    <label for="{{$id}}">{{.Label}}</label>
+  </div>
+  <div class="col-sm-12 col-md">
+    <textarea
+      name="{{.Name}}"
+      id="{{$id}}"
+      placeholder="{{.Placeholder}}"
+    ></textarea>
+  </div>
+</div>
+{{end}}

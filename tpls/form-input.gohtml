@@ -1,0 +1,16 @@
+{{define "input"}}
+{{$id := randID}}
+<div class="row responsive-label">
+  <div class="col-sm-12 col-md-3">
+    <label for="{{$id}}">{{.Label}}</label>
+  </div>
+  <div class="col-sm-12 col-md">
+    <input
+      type="{{.Type}}"
+      id="{{$id}}"
+      name="{{.Name}}"
+      placeholder="{{.Placeholder}}"
+      value="{{.Value}}"/>
+  </div>
+</div>
+{{end}}

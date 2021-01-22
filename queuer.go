@@ -68,14 +68,23 @@ func (q *queuer) tick() {
 }
 
 func (q *queuer) do(j job, chn chan job) {
-	log.Printf("Executing job '%s'\n", j.Name)
-	_, err := http.Post(
+	log.Printf("Executing job '%s' (%s)\n", j.Name, j.UUID)
+	res, err := http.Post(
 		j.Endpoint,
 		j.ContentType,
 		strings.NewReader(j.Payload),
 	)
 
-	if err != nil {
+	if res != nil {
+		log.Printf(
+			"Job sent to the endpoint (%s), received the HTTP Status Code: %d (this job requires: %d)\n",
+			j.Endpoint,
+			res.StatusCode,
+			j.HTTPOkStatus,
+		)
+	}
+
+	if err != nil || res == nil || res.StatusCode != j.HTTPOkStatus {
 		j.Retries++
 		log.Printf("Job errored. Times errored %d/%d\n",
 			j.Retries, q.options.maxRetries)
