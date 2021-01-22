@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{{template "head"}}
+<body>
+  <h1>Queue handler</h1>
+  <p>Compile the form below. We will forward your job when the time comes</p>
+  <form method="POST">
+    <input
+      type="text"
+      name="endpoint"
+      placeholder="https://your.endpoint.com/some/path?if=needed">
+    <input
+      type="text"
+      placeholder="Job identifier"
+      name="name">
+    <input
+      type="text"
+      placeholder="Payload Content-Type"
+      name="contentType"
+      value="application/json">
+    <textarea
+      name="payload"
+      placeholder='{ "your": "JSON", "here": true }'></textarea>
+  </form>
+</body>
+</html>
