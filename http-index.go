@@ -55,6 +55,7 @@ func indexAction(w http.ResponseWriter, r *http.Request) {
 		ContentType:  ct,
 		Payload:      pl,
 		Due:          due,
+		Status:       statusQueued,
 		HTTPOkStatus: cd,
 	}
 	log.Printf("Creating job: %s (%s)\n", name, j.UUID)

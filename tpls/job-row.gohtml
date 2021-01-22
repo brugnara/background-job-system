@@ -1,0 +1,12 @@
+{{define "jobRow"}}
+  <tr class="job" id="job-{{.UUID}}" onclick="selectJob && selectJob('{{.UUID}}')">
+    <td>{{.Name}}</td>
+    <td>{{.Endpoint}}</td>
+    <td>{{.Payload}}</td>
+    <td>{{.Due}}</td>
+    <td>{{.Status}}</td>
+    <td>{{.Retries}}</td>
+    <td>{{.ContentType}}</td>
+    <td>{{.HTTPOkStatus}}</td>
+  </tr>
+{{end}}

@@ -1,12 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
 	"net/http"
-	"strings"
-
-	"github.com/satori/go.uuid"
 )
 
 type formInput struct {
@@ -17,42 +12,13 @@ type formInput struct {
 	Value       string
 }
 
-var tpls *template.Template
-
 func init() {
-	// tpls stuff
-	tpls = template.Must(
-		template.New(
-			"").Funcs(
-			template.FuncMap{
-				"randID":   randID,
-				"toStruct": toStruct,
-			},
-		).ParseGlob("./tpls/*.gohtml"))
 	// handlers
 	http.HandleFunc("/", index)
 	http.HandleFunc("/jobs", jobsIndex)
+	http.HandleFunc("/job/", jobIndex)
+	http.HandleFunc("/css/bulma.min.css", bulmaCSS)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
-}
-
-// randID generates an unique id for html tags
-func randID() string {
-	return fmt.Sprintf("%s", uuid.NewV4())
-}
-
-// toStruct converts a `..|..|..|..` string, into a formInput{}
-func toStruct(s string) formInput {
-	tmp := strings.Split(s, "|")
-	if len(tmp) != 5 {
-		return formInput{}
-	}
-	return formInput{
-		tmp[0],
-		tmp[1],
-		tmp[2],
-		tmp[3],
-		tmp[4],
-	}
 }
 
 func serveHTTP(s string) {

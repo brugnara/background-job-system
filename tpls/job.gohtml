@@ -4,27 +4,17 @@
 <body>
 {{template "navbar"}}
 
-{{template "hero" "Jobs|As listed below" | toHero}}
+{{template "hero" "Job|Review or delete" | toHero}}
 {{$id := randID}}
 
 <script>
-const className = 'is-selected'
-
-function selectJob(uuid) {
-  console.log('job selected:', uuid)
-  document.querySelectorAll('tr.job').forEach(item => {
-    item.classList.remove(className)
-  })
-  document.querySelector('#job-' + uuid).classList.add(className)
-  // redirect
-  window.location.href = '/job/' + uuid
-}
+// todo
 </script>
 
 <div class="container">
   <div class="table-container">
     <table class="table is-striped", id="{{$id}}">
-      <caption>{{len .}} job/s</caption>
+      <caption>Showing the job</caption>
 
       <thead>
         <tr>
@@ -40,11 +30,12 @@ function selectJob(uuid) {
       </thead>
 
       <tbody>
-        {{range .}}
         {{template "jobRow" .}}
-        {{end}}
       </tbody>
     </table>
+
+    <button class="button is-success">Do ASAP</button>
+    <button class="button is-danger">Forget about it</button>
 
   </div>
 

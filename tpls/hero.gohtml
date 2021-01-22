@@ -1,0 +1,12 @@
+{{define "hero"}}
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">{{.Title}}</h1>
+      {{if .Subtitle -}}
+      <h2 class="subtitle">{{.Subtitle}}</h2>
+      {{- end}}
+    </div>
+  </div>
+</section>
+{{end}}

@@ -21,5 +21,17 @@ type job struct {
 	Endpoint     string
 	ContentType  string
 	HTTPOkStatus int
-	Done         bool
+	Status       string
 }
+
+type hero struct {
+	Title    string
+	Subtitle string
+}
+
+const (
+	statusDone     = "done"
+	statusRequeued = "requeued"
+	statusQueued   = "queued"
+	statusFailed   = "failed"
+)

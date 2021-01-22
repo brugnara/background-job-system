@@ -1,0 +1,14 @@
+{{define "form"}}
+<form method="POST">
+  <fieldset>
+    {{template "input" "text|name|Friendly name for this job|Name|" | toStruct}}
+    {{template "input" "text|ep|Endpoint to POST this job to|https://your.endpoint.com/some/path?if=needed|http://localhost:8080/" | toStruct}}
+    {{template "input" "text|cd|HTTP code for job OK|200|200" | toStruct}}
+    {{template "input" "datetime-local|due|Due date||" | toStruct}}
+    {{template "input" "text|ct|Payload ContentType|application/json|application/json" | toStruct}}
+    {{template "textarea" `|pl|Payload|{ "your": "JSON", "here": true }|` | toStruct}}
+
+    <button class="button is-primary" type="submit">Submit</button>
+  </fieldset>
+</form>
+{{end}}

@@ -88,9 +88,14 @@ func (q *queuer) do(j job, chn chan job) {
 		j.Retries++
 		log.Printf("Job errored. Times errored %d/%d\n",
 			j.Retries, q.options.maxRetries)
+		if j.Retries >= q.options.maxRetries {
+			j.Status = statusFailed
+		} else {
+			j.Status = statusRequeued
+		}
 	} else {
 		log.Printf("Job done after %d retry/ies\n", j.Retries)
-		j.Done = true
+		j.Status = statusDone
 	}
 
 	// send back the modified job
@@ -104,8 +109,9 @@ func (q queuer) getJobs() []job {
 	).Limit(
 		q.options.maxConcurrent,
 	).Find(
-		&xj, "due <= ? AND NOT done AND retries < ?",
+		&xj, "due <= ? AND status IN (?) AND retries < ?",
 		time.Now(),
+		[]string{statusRequeued, statusQueued},
 		q.options.maxRetries,
 	)
 	log.Printf("Found %d jobs!\n", len(xj))

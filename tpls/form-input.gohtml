@@ -1,11 +1,11 @@
 {{define "input"}}
 {{$id := randID}}
-<div class="row responsive-label">
-  <div class="col-sm-12 col-md-3">
-    <label for="{{$id}}">{{.Label}}</label>
-  </div>
-  <div class="col-sm-12 col-md">
+<div class="field">
+  <label class="label" for="{{$id}}">{{.Label}}</label>
+  <div class="control">
     <input
+      required
+      class="input"
       type="{{.Type}}"
       id="{{$id}}"
       name="{{.Name}}"

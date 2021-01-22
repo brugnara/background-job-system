@@ -12,3 +12,8 @@ func jobsIndex(w http.ResponseWriter, r *http.Request) {
 	//
 	tpls.ExecuteTemplate(w, "jobs.gohtml", xj)
 }
+
+func jobIndex(w http.ResponseWriter, r *http.Request) {
+	var j job
+	tpls.ExecuteTemplate(w, "job.gohtml", j)
+}

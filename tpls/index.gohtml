@@ -2,8 +2,10 @@
 <html>
 {{template "head"}}
 <body>
-  <h1>Queue handler</h1>
-  <p>Compile the form below. We will forward your job when the time comes</p>
+
+{{template "navbar"}}
+
+{{template "hero" "Queue handler|Compile the form below. We will forward your job when the time comes" | toHero}}
 
 {{if .Error -}}
   {{template "error" .Error}}
@@ -13,19 +15,8 @@
   {{template "done" .Done}}
 {{- end}}
 
-  <form method="POST">
-    <fieldset>
-      <legend>Job insert</legend>
-
-      {{template "input" "text|name|Friendly name for this job|Name|" | toStruct}}
-      {{template "input" "text|ep|Endpoint to POST this job to|https://your.endpoint.com/some/path?if=needed|http://localhost:8080/" | toStruct}}
-      {{template "input" "text|cd|HTTP code for job OK|200|200" | toStruct}}
-      {{template "input" "text|ct|Payload ContentType|application/json|application/json" | toStruct}}
-      {{template "input" "datetime-local|due|Due date||" | toStruct}}
-      {{template "textarea" `|pl|Payload|{ "your": "JSON", "here": true }|` | toStruct}}
-
-      <button class="primary" type="submit">Submit</button>
-    </fieldset>
-  </form>
+<div class="container">
+{{template "form"}}
+</div>
 </body>
 </html>
