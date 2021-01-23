@@ -45,7 +45,7 @@ The server who will receive this job and will digest. Jep, because this is a
 forwarding server only. The dirty work is made by `endpoint`s.
 
 What, don't you have an endpoint to use for testing this?
-I'll tell you a secret. The folder `/listener` contains a dummy web server ;)
+I'll tell you a secret. The folder `/_listener` contains a dummy web server ;)
 
 ### HTTP Status Code
 
@@ -69,6 +69,10 @@ everything you need to see. Select a job if you want to delete or run ASAP.
 
 What do I mean with ASAP? As soon as possible, in this server means as far as
 the tick clocks, and this happens every minute.
+
+## Database
+
+For this test, Sqlite3 is used.
 
 ## Tests
 
