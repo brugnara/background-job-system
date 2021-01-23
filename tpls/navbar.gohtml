@@ -1,13 +1,22 @@
 {{define "navbar"}}
-<nav class="navbar is-light" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand"></div>
-  <div class="navbar-menu">
-    <a class="navbar-item" href="/">
-      Home
-    </a>
-    <a class="navbar-item" href="/jobs">
-      Jobs
-    </a>
-  </div>
-</nav>
+{{$id := randID}}
+<div class="tabs">
+  <ul>
+    <li id="li-home-{{$id}}">
+      <a href="/">Queuer</a>
+    </li>
+    <li id="li-jobs-{{$id}}">
+      <a href="/jobs">Jobs</a>
+    </li>
+  </ul>
+</div>
+<script>
+(function () {
+  if (window.location.href.split('?')[0].split('/').pop() === '') {
+    document.querySelector('#li-home-{{$id}}').classList.add('is-active')
+  } else {
+    document.querySelector('#li-jobs-{{$id}}').classList.add('is-active')
+  }
+})()
+</script>
 {{end}}
