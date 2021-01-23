@@ -28,16 +28,20 @@
   const next = document
     .querySelector('#paginator-{{$id}} a.pagination-next')
 
-  if (page == 1) {
+  if (page == 1 || !pages) {
     prev.setAttribute('disabled', true)
   } else {
     prev.setAttribute('href', '/jobs?page=' + (page-1))
   }
 
-  if (page == pages) {
+  if (page == pages || !pages) {
     next.setAttribute('disabled', true)
   } else {
     next.setAttribute('href', '/jobs?page=' + (page+1))
+  }
+
+  if (!pages) {
+    return
   }
 
   const ul = document
