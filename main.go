@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -45,6 +46,10 @@ func init() {
 }
 
 func main() {
-	go serveHTTP(":8081")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+	go serveHTTP(fmt.Sprintf(":%s", port))
 	q.digestForeverEvery(time.Minute)
 }
