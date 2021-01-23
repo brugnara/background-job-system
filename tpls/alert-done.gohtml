@@ -2,7 +2,9 @@
 <div class="container">
   <div class="notification is-primary">
     <h3>Job enqueued!</h3>
-    <p>UUID: {{.}}</p>
+    <p>UUID:
+      <a href="/job/{{.}}">{{.}}</a>
+    </p>
   </div>
 </div>
 <br>

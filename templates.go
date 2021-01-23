@@ -19,6 +19,7 @@ func init() {
 				"randID":   randID,
 				"toStruct": toStruct,
 				"toHero":   toHero,
+				"isDone":   isDone,
 			},
 		).ParseGlob("./tpls/*.gohtml"))
 }
@@ -53,4 +54,8 @@ func toHero(s string) hero {
 		ret.Subtitle = tmp[1]
 	}
 	return ret
+}
+
+func isDone(s string) bool {
+	return s == "done"
 }

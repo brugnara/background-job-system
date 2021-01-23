@@ -7,6 +7,12 @@
 {{template "hero" "Jobs|As listed below" | toHero}}
 {{$id := randID}}
 
+<style>
+tr {
+  cursor: pointer;
+}
+</style>
+
 <script>
 const className = 'is-selected'
 
@@ -40,8 +46,14 @@ function selectJob(uuid) {
       </thead>
 
       <tbody>
-        {{range .}}
-        {{template "jobRow" .}}
+        {{if len .}}
+          {{range .}}
+          {{template "jobRow" .}}
+          {{end}}
+        {{else}}
+        <tr>
+          <th>No jobs!</th>
+        </tr>
         {{end}}
       </tbody>
     </table>

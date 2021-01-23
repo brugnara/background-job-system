@@ -5,37 +5,71 @@
 {{template "navbar"}}
 
 {{template "hero" "Job|Review or delete" | toHero}}
+
 {{$id := randID}}
+{{$done := .Status | isDone}}
 
 <script>
-// todo
+function job(uuid, action) {
+  if (!window.confirm('Are you sure?')) {
+    return
+  }
+  window.location.href = window.location.href.split('?')[0] + '?action=' + action
+}
 </script>
 
 <div class="container">
   <div class="table-container">
-    <table class="table is-striped", id="{{$id}}">
-      <caption>Showing the job</caption>
-
-      <thead>
+    <table class="table", id="{{$id}}">
+      <tbody>
         <tr>
           <th>Name</th>
-          <th>Endpoint</th>
-          <th>Payload</th>
-          <th>Due</th>
-          <th>Status</th>
-          <th>Retries</th>
-          <th>ContentType</th>
-          <th>HTTPOkStatus</th>
+          <td>{{.Name}}</td>
         </tr>
-      </thead>
-
-      <tbody>
-        {{template "jobRow" .}}
+        <tr>
+          <th>Endpoint</th>
+          <td>{{.Endpoint}}</td>
+        </tr>
+        <tr>
+          <th>Payload</th>
+          <td>{{.Payload}}</td>
+        </tr>
+        <tr>
+          <th>Due</th>
+          <td>{{.Due}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{.Status}}</td>
+        </tr>
+        <tr>
+          <th>Retries</th>
+          <td>{{.Retries}}</td>
+        </tr>
+        <tr>
+          <th>ContentType</th>
+          <td>{{.ContentType}}</td>
+        </tr>
+        <tr>
+          <th>HTTPOkStatus</th>
+          <td>{{.HTTPOkStatus}}</td>
+        </tr>
+        <tr>
+          <th>UUID</th>
+          <td>{{.UUID}}</td>
+        </tr>
       </tbody>
     </table>
 
-    <button class="button is-success">Do ASAP</button>
-    <button class="button is-danger">Forget about it</button>
+    <button
+      class="button is-success"
+      {{if $done}}disabled{{end}}
+      onclick="job('{{.UUID}}', 'do')"
+    >Do ASAP</button>
+    <button
+      class="button is-danger"
+      onclick="job('{{.UUID}}', 'del')"
+    >Forget about it</button>
 
   </div>
 
