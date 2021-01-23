@@ -6,6 +6,7 @@
 
 {{template "hero" "Jobs|As listed below" | toHero}}
 {{$id := randID}}
+{{$jobs := .Jobs}}
 
 <style>
 tr {
@@ -28,9 +29,11 @@ function selectJob(uuid) {
 </script>
 
 <div class="container">
+  {{template "paginator" .}}
+
   <div class="table-container">
     <table class="table is-striped", id="{{$id}}">
-      <caption>{{len .}} job/s</caption>
+      <caption>{{len $jobs}} job/s of {{.Count}}</caption>
 
       <thead>
         <tr>
@@ -46,8 +49,8 @@ function selectJob(uuid) {
       </thead>
 
       <tbody>
-        {{if len .}}
-          {{range .}}
+        {{if len $jobs}}
+          {{range $jobs}}
           {{template "jobRow" .}}
           {{end}}
         {{else}}
@@ -60,6 +63,7 @@ function selectJob(uuid) {
 
   </div>
 
+  {{template "paginator" .}}
 </div>
 </body>
 </html>

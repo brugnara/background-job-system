@@ -3,10 +3,13 @@ package main
 import (
 	"net/http"
 	"regexp"
+	"strconv"
 	"time"
 )
 
 var reUUID *regexp.Regexp
+
+const pageSize = 20
 
 func init() {
 	// 910bf50a-31fd-4820-a4e9-f4115aad529a
@@ -15,11 +18,37 @@ func init() {
 
 func jobsIndex(w http.ResponseWriter, r *http.Request) {
 	var xj []job
+	var count int64
+
+	page, err := strconv.Atoi(r.FormValue("page"))
+	if err != nil {
+		page = 1
+	}
+
+	db.Table("jobs").Count(&count)
+
 	db.Order(
 		"due ASC",
-	).Offset(0).Limit(20).Find(&xj)
-	//
-	tpls.ExecuteTemplate(w, "jobs.gohtml", xj)
+	).Offset((page - 1) * pageSize).Limit(pageSize).Find(&xj)
+
+	pages := int(count / pageSize)
+	if count%pageSize > 0 {
+		pages++
+	}
+
+	// TODO: return a stuct with offset, limit and item count for
+	// pagination!
+	tpls.ExecuteTemplate(w, "jobs.gohtml", struct {
+		Jobs  []job
+		Page  int
+		Pages int
+		Count int64
+	}{
+		xj,
+		page,
+		pages,
+		count,
+	})
 }
 
 func jobIndex(w http.ResponseWriter, r *http.Request) {

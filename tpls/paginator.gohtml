@@ -1,0 +1,61 @@
+{{define "paginator"}}
+{{$id := randID}}
+<nav
+  id="paginator-{{$id}}"
+  class="pagination"
+  role="navigation"
+  aria-label="pagination">
+  <a
+    class="pagination-previous"
+  >Previous</a>
+  <a
+    class="pagination-next"
+  >Next page</a>
+
+  <ul class="pagination-list">
+  </ul>
+</nav>
+
+<script>
+(function () {
+  const page = +'{{.Page}}'
+  const pages = +'{{.Pages}}'
+
+  let lis = ''
+
+  const prev = document
+    .querySelector('#paginator-{{$id}} a.pagination-previous')
+  const next = document
+    .querySelector('#paginator-{{$id}} a.pagination-next')
+
+  if (page == 1) {
+    prev.setAttribute('disabled', true)
+  } else {
+    prev.setAttribute('href', '/jobs?page=' + (page-1))
+  }
+
+  if (page == pages) {
+    next.setAttribute('disabled', true)
+  } else {
+    next.setAttribute('href', '/jobs?page=' + (page+1))
+  }
+
+  const ul = document
+    .querySelector('#paginator-{{$id}} ul')
+
+  for (let i=1;i<=pages;i++) {
+    const li = document.createElement('li')
+    const a = document.createElement('a')
+
+    a.setAttribute('class', 'pagination-link' + (i == page ? ' is-current' : ''))
+    a.setAttribute('aria-label', 'Page ' + i)
+    a.setAttribute('aria-current', page)
+    a.setAttribute('href', '/jobs?page=' + i)
+    a.innerHTML = i
+    //
+    li.appendChild(a)
+    ul.appendChild(li)
+  }
+})()
+</script>
+{{end}}
