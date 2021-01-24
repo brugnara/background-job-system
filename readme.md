@@ -54,7 +54,9 @@ Status Code like the one you want.
 
 ### Due date
 
-Set a date in the past and the job is run ASAP.
+This is the time when you want your job to be sent to the endpoint. Could be
+any date, even in two years. The job will be stored and execute when the time
+comes. You can also set a date in the past and the job will run ASAP.
 
 ### Name
 
